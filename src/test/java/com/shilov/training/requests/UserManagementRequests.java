@@ -2,7 +2,6 @@ package com.shilov.training.requests;
 
 import com.shilov.training.endpoints.ReqresEndpoints;
 import io.restassured.response.ValidatableResponse;
-
 import static io.restassured.RestAssured.*;
 
 public class UserManagementRequests extends BaseRequest {

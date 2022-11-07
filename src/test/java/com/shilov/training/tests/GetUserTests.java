@@ -12,11 +12,6 @@ import static com.shilov.training.tests.BaseReqresTest.Messages.*;
 
 public class GetUserTests extends BaseReqresTest {
 
-    private final UsersReader usersReader = UsersReader.getInstance();
-    private final UsersRequestsParametersReader usersRequestsParametersReader = UsersRequestsParametersReader.getInstance();
-    private final String defaultValidPageNumber  = "2";
-    private final String defaultValidUsersNumberPerPage  = "2";
-
     @Test
     public void testGetUsersWithoutParameters() {
         ValidatableResponse response = userManagementRequests.getUsers();
@@ -51,6 +46,7 @@ public class GetUserTests extends BaseReqresTest {
 
     @Test(dataProvider = "getUsersInvalidUsersNumber")
     public void testGetUsersInvalidUsersNumber(String usersNumber) {
+        String defaultValidPageNumber = "2";
         ValidatableResponse response = userManagementRequests.getUsers(defaultValidPageNumber, usersNumber);
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.extract().statusCode(), 200, CODE.toString());
@@ -66,6 +62,7 @@ public class GetUserTests extends BaseReqresTest {
 
     @Test (dataProvider = "getUsersInvalidPageNumber")
     public void testGetUsersInvalidPageNumber(String pageNumber) {
+        String defaultValidUsersNumberPerPage = "2";
         ValidatableResponse response = userManagementRequests.getUsers(pageNumber, defaultValidUsersNumberPerPage);
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.extract().statusCode(), 200, CODE.toString());
@@ -91,7 +88,7 @@ public class GetUserTests extends BaseReqresTest {
     }
 
     @DataProvider(name = "getUserValidId")
-    public Object[][] setGetUserValidId() {
+    public Object[][] setGetUserValidIdDataProvider() {
         return usersRequestsParametersReader.getValidUsersId();
     }
 
@@ -105,7 +102,7 @@ public class GetUserTests extends BaseReqresTest {
     }
 
     @DataProvider(name = "getUserInvalidId")
-    public Object[][] setGetUserInvalidId() {
+    public Object[][] setGetUserInvalidIdDataProvider() {
         return usersRequestsParametersReader.getInvalidUsersId();
     }
 }

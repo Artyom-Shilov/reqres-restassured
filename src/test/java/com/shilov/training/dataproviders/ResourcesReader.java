@@ -15,7 +15,10 @@ public class ResourcesReader {
     private static final long CURRENT_RESOURCES_AMOUNT;
 
     static {
-        CURRENT_RESOURCES_AMOUNT = RESOURCES_PROPERTIES.entrySet().size();
+        CURRENT_RESOURCES_AMOUNT = RESOURCES_PROPERTIES.entrySet()
+                .stream()
+                .filter(e -> ((String)e.getKey()).contains("name"))
+                .count();
     }
 
     private ResourcesReader() {}
@@ -40,7 +43,7 @@ public class ResourcesReader {
                 .build();
     }
 
-    public List<Resource> getUsersInRange(long from, long to) {
+    public List<Resource> getResourcesInRange(long from, long to) {
         Validator.checkIdInRange(from, to, CURRENT_RESOURCES_AMOUNT);
         List<Resource> resources = new ArrayList<>();
         for (long i = from; i <= to; i++ ) {

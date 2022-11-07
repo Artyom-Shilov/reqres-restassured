@@ -15,7 +15,10 @@ public class UsersReader {
     private static final long CURRENT_USERS_AMOUNT;
 
     static {
-        CURRENT_USERS_AMOUNT = USERS_PROPERTIES.entrySet().size();
+        CURRENT_USERS_AMOUNT = USERS_PROPERTIES.entrySet()
+                .stream()
+                .filter(e -> ((String)e.getKey()).contains("email"))
+                .count();
     }
 
     private UsersReader() {}

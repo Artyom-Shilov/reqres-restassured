@@ -17,16 +17,16 @@ public class UsersRequestsParametersReader extends BaseRequestsParametersPropert
     }
 
     public Object[][] getValidPageNumbersAndUsersNumber() {
-        return getDataForTestNgDataProvider("getUsers.positive", properties);
+        return getDataForTestNgDataProvider("getUsers.valid", properties);
     }
 
 
     public Object[][] getInvalidPageNumbersPerPage() {
-        return getDataForTestNgDataProvider("getUsers.negative.pageNumber", properties);
+        return getDataForTestNgDataProvider("getUsers.invalid.pageNumber", properties);
     }
 
     public Object[][] getInvalidUsersNumbersPerPage() {
-        return getDataForTestNgDataProvider("getUsers.negative.usersNumber", properties);
+        return getDataForTestNgDataProvider("getUsers.invalid.usersNumber", properties);
     }
 
     public Object[][] getValidUsersId() {

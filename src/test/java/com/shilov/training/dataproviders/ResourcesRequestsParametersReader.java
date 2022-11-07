@@ -16,8 +16,28 @@ public class ResourcesRequestsParametersReader extends BaseRequestsParametersPro
         return instance;
     }
 
-    public Object[][] getValidPageNumbersAndResourcesPerPage() {
-        return getDataForTestNgDataProvider("getResources.positive", properties);
+    public Object[][] getValidPageNumbers() {
+        return getDataForTestNgDataProvider("getResources.valid.pageNumber", properties);
+    }
+
+    public Object[][] getInvalidPageNumbers() {
+        return getDataForTestNgDataProvider("getResources.invalid.pageNumber", properties);
+    }
+
+    public Object[][] getValidResourcesPerPage() {
+        return getDataForTestNgDataProvider("getResources.valid.resourcesPerPage", properties);
+    }
+
+    public Object[][] getInvalidResourcesPerPage() {
+        return getDataForTestNgDataProvider("getResources.invalid.resourcesPerPage", properties);
+    }
+
+    public Object[][] getValidResourcesId() {
+        return getDataForTestNgDataProvider("getResource.validId", properties);
+    }
+
+    public Object[][] getInvalidResourcesId() {
+        return getDataForTestNgDataProvider("getResource.invalidId", properties);
     }
 
 

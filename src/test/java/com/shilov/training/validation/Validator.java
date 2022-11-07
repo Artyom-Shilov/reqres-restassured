@@ -12,6 +12,7 @@ public class Validator {
     }
 
     public static void checkIdInRange(long from, long to, long amount) {
+        System.out.println(amount);
         if (from <= 0) {
             throw new IllegalArgumentException("from should be more than 0");
         }
