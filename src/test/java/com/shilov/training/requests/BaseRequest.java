@@ -1,6 +1,7 @@
 package com.shilov.training.requests;
 
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
 public class BaseRequest {
@@ -11,5 +12,6 @@ public class BaseRequest {
             new RequestSpecBuilder()
                     .setBaseUri(REQRES_URI)
                     .setRelaxedHTTPSValidation()
+                    .setAccept(ContentType.JSON)
                     .build();
 }

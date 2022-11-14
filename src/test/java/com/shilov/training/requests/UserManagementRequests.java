@@ -1,7 +1,13 @@
 package com.shilov.training.requests;
 
+import com.shilov.training.bodies.RegisterUserRequestBody;
 import com.shilov.training.endpoints.ReqresEndpoints;
+import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.*;
 
 public class UserManagementRequests extends BaseRequest {
@@ -40,6 +46,16 @@ public class UserManagementRequests extends BaseRequest {
                 .spec(baseSpecification)
                 .when()
                 .get(ReqresEndpoints.GET_USER_BY_ID.toString(), userId)
+                .then();
+    }
+
+    public ValidatableResponse registerUser(RegisterUserRequestBody registerUserRequestBody) {
+        return given()
+                .contentType(ContentType.JSON)
+                .spec(baseSpecification)
+                .body(registerUserRequestBody)
+                .when()
+                .post(ReqresEndpoints.REGISTER_USER.toString())
                 .then();
     }
 }
