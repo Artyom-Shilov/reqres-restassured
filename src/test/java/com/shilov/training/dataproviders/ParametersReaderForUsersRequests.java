@@ -1,22 +1,16 @@
 package com.shilov.training.dataproviders;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.Properties;
 
-public class UsersRequestsParametersReader extends BaseRequestsParametersPropertyReader {
+@UtilityClass
+public class ParametersReaderForUsersRequests extends BaseRequestsParametersPropertyReader {
 
     private final Properties properties = PropertiesLoader.loadProperties(
             "src/test/resources/users_requests_parameters.properties");
 
-    private static UsersRequestsParametersReader instance;
-
-    public static UsersRequestsParametersReader getInstance() {
-        if (instance == null) {
-            instance = new UsersRequestsParametersReader();
-        }
-        return instance;
-    }
-
-    public Object[][] getValidPageNumbersAndUsersNumber() {
+    public static Object[][] getValidPageNumbersAndUsersNumber() {
         return getDataForTestNgDataProvider("getUsers.valid", properties);
     }
 

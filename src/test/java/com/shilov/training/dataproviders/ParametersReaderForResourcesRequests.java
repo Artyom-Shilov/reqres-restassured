@@ -1,42 +1,36 @@
 package com.shilov.training.dataproviders;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.Properties;
 
-public class ResourcesRequestsParametersReader extends BaseRequestsParametersPropertyReader {
+@UtilityClass
+public class ParametersReaderForResourcesRequests extends BaseRequestsParametersPropertyReader {
 
     private final Properties properties = PropertiesLoader.loadProperties(
             "src/test/resources/resources_requests_parameters.properties");
 
-    private static ResourcesRequestsParametersReader instance;
-
-    public static ResourcesRequestsParametersReader getInstance() {
-        if (instance == null) {
-            instance = new ResourcesRequestsParametersReader();
-        }
-        return instance;
-    }
-
-    public Object[][] getValidPageNumbers() {
+    public static Object[][] getValidPageNumbers() {
         return getDataForTestNgDataProvider("getResources.valid.pageNumber", properties);
     }
 
-    public Object[][] getInvalidPageNumbers() {
+    public static Object[][] getInvalidPageNumbers() {
         return getDataForTestNgDataProvider("getResources.invalid.pageNumber", properties);
     }
 
-    public Object[][] getValidResourcesPerPage() {
+    public static Object[][] getValidResourcesPerPage() {
         return getDataForTestNgDataProvider("getResources.valid.resourcesPerPage", properties);
     }
 
-    public Object[][] getInvalidResourcesPerPage() {
+    public static Object[][] getInvalidResourcesPerPage() {
         return getDataForTestNgDataProvider("getResources.invalid.resourcesPerPage", properties);
     }
 
-    public Object[][] getValidResourcesId() {
+    public static Object[][] getValidResourcesId() {
         return getDataForTestNgDataProvider("getResource.validId", properties);
     }
 
-    public Object[][] getInvalidResourcesId() {
+    public static Object[][] getInvalidResourcesId() {
         return getDataForTestNgDataProvider("getResource.invalidId", properties);
     }
 

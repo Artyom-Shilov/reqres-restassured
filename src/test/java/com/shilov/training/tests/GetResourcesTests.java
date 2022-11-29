@@ -1,5 +1,7 @@
 package com.shilov.training.tests;
 
+import com.shilov.training.dataproviders.ParametersReaderForResourcesRequests;
+import com.shilov.training.dataproviders.ResourcesReader;
 import com.shilov.training.models.Resource;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -25,7 +27,7 @@ public class GetResourcesTests extends BaseReqresTest {
         softAssert.assertEquals(response.body().jsonPath().getString("per_page"), "6", RESOURCES_PER_PAGE.name());
         softAssert.assertEquals(
                 response.body().jsonPath().getList("data", Resource.class),
-                resourcesReader.getResourcesInRange(1, 6), RESOURCES_OBJECTS.toString());
+                ResourcesReader.getResourcesInRange(1, 6), RESOURCES_OBJECTS.toString());
         softAssert.assertAll();
     }
 
@@ -36,13 +38,13 @@ public class GetResourcesTests extends BaseReqresTest {
         softAssert.assertEquals(response.statusCode(), 200);
         softAssert.assertEquals(
                 response.jsonPath().getObject("data", Resource.class),
-                resourcesReader.getResourceById(Long.parseLong(resourceId)), RESOURCES_OBJECTS.toString());
+                ResourcesReader.getResourceById(Long.parseLong(resourceId)), RESOURCES_OBJECTS.toString());
         softAssert.assertAll();
     }
 
     @DataProvider(name = "getResourceValidId")
     public Object[][] setGetResourceValidIdDataProvider() {
-        return resourcesRequestsParametersReader.getValidResourcesId();
+        return ParametersReaderForResourcesRequests.getValidResourcesId();
     }
 
     @Test(dataProvider = "getResourceInvalidId")
@@ -56,7 +58,7 @@ public class GetResourcesTests extends BaseReqresTest {
 
     @DataProvider(name = "getResourceInvalidId")
     public Object[][] setGetResourceInvalidIdDataProvider() {
-        return resourcesRequestsParametersReader.getInvalidResourcesId();
+        return ParametersReaderForResourcesRequests.getInvalidResourcesId();
     }
 
     @Test (dataProvider = "getResourcesInvalidPageNumber")
@@ -71,7 +73,7 @@ public class GetResourcesTests extends BaseReqresTest {
 
     @DataProvider(name = "getResourcesInvalidPageNumber")
     public Object[][] setGetResourcesInvalidPageNumberDataProvider() {
-        return resourcesRequestsParametersReader.getInvalidPageNumbers();
+        return ParametersReaderForResourcesRequests.getInvalidPageNumbers();
     }
 
     @Test(dataProvider = "getResourcesInvalidResourcesPerPage")
@@ -86,7 +88,7 @@ public class GetResourcesTests extends BaseReqresTest {
 
     @DataProvider(name = "getResourcesInvalidResourcesPerPage")
     public Object[][] setResourcesInvalidResourcesPerPageDataProvider() {
-        return resourcesRequestsParametersReader.getInvalidResourcesPerPage();
+        return ParametersReaderForResourcesRequests.getInvalidResourcesPerPage();
     }
 
     @Test(dataProvider = "getResourcesValidPageNumbers")
@@ -97,13 +99,13 @@ public class GetResourcesTests extends BaseReqresTest {
         softAssert.assertEquals(response.body().jsonPath().getString("page"), pageNumber, PAGE_NUMBER.toString());
         int resourceIdLimit = Integer.parseInt(pageNumber) * Integer.parseInt(defaultValidResourcesPerPage);
         softAssert.assertEquals(response.body().jsonPath().getList("data", Resource.class),
-                resourcesReader.getResourcesInRange(resourceIdLimit - 1, resourceIdLimit), RESOURCES_OBJECTS.toString());
+                ResourcesReader.getResourcesInRange(resourceIdLimit - 1, resourceIdLimit), RESOURCES_OBJECTS.toString());
         softAssert.assertAll();
     }
 
     @DataProvider(name = "getResourcesValidPageNumbers")
     public Object[][] setGetResourcesValidPageNumbersDataProvider() {
-        return resourcesRequestsParametersReader.getValidPageNumbers();
+        return ParametersReaderForResourcesRequests.getValidPageNumbers();
     }
 
     @Test(dataProvider = "getResourcesValidResourcesPerPage")
@@ -120,7 +122,7 @@ public class GetResourcesTests extends BaseReqresTest {
 
     @DataProvider(name = "getResourcesValidResourcesPerPage")
     public Object[][] setGetResourcesResourcesPerPageDataProvider() {
-        return resourcesRequestsParametersReader.getValidResourcesPerPage();
+        return ParametersReaderForResourcesRequests.getValidResourcesPerPage();
     }
 
 }

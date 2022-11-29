@@ -1,6 +1,6 @@
 package com.shilov.training.tests;
 
-import com.shilov.training.dataproviders.UsersRequestsParametersReader;
+import com.shilov.training.dataproviders.ParametersReaderForUsersRequests;
 import com.shilov.training.dataproviders.UsersReader;
 import com.shilov.training.models.User;
 import io.restassured.response.ValidatableResponse;
@@ -21,7 +21,7 @@ public class GetUserTests extends BaseReqresTest {
         softAssert.assertEquals(response.extract().body().jsonPath().getString("per_page"), "6", USERS_PER_PAGE.name());
         softAssert.assertEquals(
                 response.extract().body().jsonPath().getList("data", User.class),
-                usersReader.getUsersInRange(1, 6), USERS_OBJECTS.toString());
+                UsersReader.getUsersInRange(1, 6), USERS_OBJECTS.toString());
         softAssert.assertAll();
     }
 
@@ -35,13 +35,13 @@ public class GetUserTests extends BaseReqresTest {
         int userNumberLimit = Integer.parseInt(pageNumber) * Integer.parseInt(usersNumberPerPage);
         softAssert.assertEquals(
                 response.extract().body().jsonPath().getList("data", User.class),
-                usersReader.getUsersInRange(userNumberLimit - 1, userNumberLimit), USERS_OBJECTS.toString());
+                UsersReader.getUsersInRange(userNumberLimit - 1, userNumberLimit), USERS_OBJECTS.toString());
         softAssert.assertAll();
     }
 
     @DataProvider(name = "getUsersPositive")
     public Object[][] setGetUsersPositiveDataProvider() {
-        return usersRequestsParametersReader.getValidPageNumbersAndUsersNumber();
+        return ParametersReaderForUsersRequests.getValidPageNumbersAndUsersNumber();
     }
 
     @Test(dataProvider = "getUsersInvalidUsersNumber")
@@ -57,7 +57,7 @@ public class GetUserTests extends BaseReqresTest {
 
     @DataProvider(name = "getUsersInvalidUsersNumber")
     public Object[][] setGetUsersInvalidUsersNumberDataProvider() {
-        return usersRequestsParametersReader.getInvalidUsersNumbersPerPage();
+        return ParametersReaderForUsersRequests.getInvalidUsersNumbersPerPage();
     }
 
     @Test (dataProvider = "getUsersInvalidPageNumber")
@@ -73,7 +73,7 @@ public class GetUserTests extends BaseReqresTest {
 
     @DataProvider(name = "getUsersInvalidPageNumber")
     public Object[][] setGetUserInvalidPageNumberDataProvider() {
-        return usersRequestsParametersReader.getInvalidPageNumbersPerPage();
+        return ParametersReaderForUsersRequests.getInvalidPageNumbersPerPage();
     }
 
     @Test(dataProvider = "getUserValidId")
@@ -83,13 +83,13 @@ public class GetUserTests extends BaseReqresTest {
         softAssert.assertEquals(response.extract().statusCode(), 200);
         softAssert.assertEquals(
                 response.extract().jsonPath().getObject("data", User.class),
-                usersReader.getUserById(Long.parseLong(userId)), USERS_OBJECTS.toString());
+                UsersReader.getUserById(Long.parseLong(userId)), USERS_OBJECTS.toString());
         softAssert.assertAll();
     }
 
     @DataProvider(name = "getUserValidId")
     public Object[][] setGetUserValidIdDataProvider() {
-        return usersRequestsParametersReader.getValidUsersId();
+        return ParametersReaderForUsersRequests.getValidUsersId();
     }
 
     @Test(dataProvider = "getUserInvalidId")
@@ -103,6 +103,6 @@ public class GetUserTests extends BaseReqresTest {
 
     @DataProvider(name = "getUserInvalidId")
     public Object[][] setGetUserInvalidIdDataProvider() {
-        return usersRequestsParametersReader.getInvalidUsersId();
+        return ParametersReaderForUsersRequests.getInvalidUsersId();
     }
 }

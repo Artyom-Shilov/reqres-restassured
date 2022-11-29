@@ -1,20 +1,18 @@
 package com.shilov.training.tests;
 
 import com.shilov.training.dataproviders.ResourcesReader;
-import com.shilov.training.dataproviders.ResourcesRequestsParametersReader;
+import com.shilov.training.dataproviders.ParametersReaderForResourcesRequests;
 import com.shilov.training.dataproviders.UsersReader;
-import com.shilov.training.dataproviders.UsersRequestsParametersReader;
+import com.shilov.training.dataproviders.ParametersReaderForUsersRequests;
+import com.shilov.training.requests.AccountOperationsRequests;
 import com.shilov.training.requests.ResourceManagementRequests;
 import com.shilov.training.requests.UserManagementRequests;
 
 public abstract class BaseReqresTest {
 
     protected UserManagementRequests userManagementRequests = UserManagementRequests.getInstance();
-    protected UsersReader usersReader = UsersReader.getInstance();
-    protected UsersRequestsParametersReader usersRequestsParametersReader = UsersRequestsParametersReader.getInstance();
     protected ResourceManagementRequests resourceManagementRequests = ResourceManagementRequests.getInstance();
-    protected ResourcesReader resourcesReader = ResourcesReader.getInstance();
-    protected ResourcesRequestsParametersReader resourcesRequestsParametersReader = ResourcesRequestsParametersReader.getInstance();
+    protected AccountOperationsRequests accountOperationsRequests = AccountOperationsRequests.getInstance();
 
 
     protected enum Messages {

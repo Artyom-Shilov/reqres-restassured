@@ -2,11 +2,13 @@ package com.shilov.training.dataproviders;
 
 import com.shilov.training.models.User;
 import com.shilov.training.validation.Validator;
+import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+@UtilityClass
 public class UsersReader {
 
     private static final Properties USERS_PROPERTIES = PropertiesLoader.loadProperties(
@@ -21,18 +23,7 @@ public class UsersReader {
                 .count();
     }
 
-    private UsersReader() {}
-
-    private static UsersReader instance;
-
-    public static UsersReader getInstance() {
-        if (instance == null ) {
-            instance = new UsersReader();
-        }
-        return instance;
-    }
-
-    public User getUserById(long id) {
+    public static User getUserById(long id) {
         Validator.checkId(id, CURRENT_USERS_AMOUNT);
         return User.builder()
                 .id(id)
@@ -43,7 +34,7 @@ public class UsersReader {
                 .build();
     }
 
-    public List<User> getUsersInRange(long from, long to) {
+    public static List<User> getUsersInRange(long from, long to) {
        Validator.checkIdInRange(from, to, CURRENT_USERS_AMOUNT);
         List<User> users = new ArrayList<>();
         for (long i = from; i <= to; i++ ) {
@@ -52,7 +43,7 @@ public class UsersReader {
         return users;
     }
 
-    public List<User> getAllUsers() {
+    public static List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         for (long i = 1; i <= CURRENT_USERS_AMOUNT; i++) {
             users.add(getUserById(i));

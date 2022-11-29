@@ -2,11 +2,13 @@ package com.shilov.training.dataproviders;
 
 import com.shilov.training.models.Resource;
 import com.shilov.training.validation.Validator;
+import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+@UtilityClass
 public class ResourcesReader {
 
     private static final Properties RESOURCES_PROPERTIES = PropertiesLoader.loadProperties(
@@ -21,18 +23,7 @@ public class ResourcesReader {
                 .count();
     }
 
-    private ResourcesReader() {}
-
-    private static ResourcesReader instance;
-
-    public static ResourcesReader getInstance() {
-        if (instance == null ) {
-            instance = new ResourcesReader();
-        }
-        return instance;
-    }
-
-    public Resource getResourceById(long id) {
+    public static Resource getResourceById(long id) {
         Validator.checkId(id, CURRENT_RESOURCES_AMOUNT);
         return Resource.builder()
                 .id(id)
@@ -43,7 +34,7 @@ public class ResourcesReader {
                 .build();
     }
 
-    public List<Resource> getResourcesInRange(long from, long to) {
+    public static List<Resource> getResourcesInRange(long from, long to) {
         Validator.checkIdInRange(from, to, CURRENT_RESOURCES_AMOUNT);
         List<Resource> resources = new ArrayList<>();
         for (long i = from; i <= to; i++ ) {
@@ -52,7 +43,7 @@ public class ResourcesReader {
         return resources;
     }
 
-    public List<Resource> getAllResources() {
+    public static List<Resource> getAllResources() {
         List<Resource> resources = new ArrayList<>();
         for (long i = 1; i <= CURRENT_RESOURCES_AMOUNT; i++) {
             resources.add(getResourceById(i));
