@@ -7,12 +7,33 @@ import com.shilov.training.dataproviders.ParametersReaderForUsersRequests;
 import com.shilov.training.requests.AccountOperationsRequests;
 import com.shilov.training.requests.ResourceManagementRequests;
 import com.shilov.training.requests.UserManagementRequests;
+import org.testng.annotations.DataProvider;
 
 public abstract class BaseReqresTest {
 
     protected UserManagementRequests userManagementRequests = UserManagementRequests.getInstance();
     protected ResourceManagementRequests resourceManagementRequests = ResourceManagementRequests.getInstance();
     protected AccountOperationsRequests accountOperationsRequests = AccountOperationsRequests.getInstance();
+
+    @DataProvider(name = "resourcesValidId")
+    public Object[][] resourcesValidIdDataProvider() {
+        return ParametersReaderForResourcesRequests.getValidResourcesId();
+    }
+
+    @DataProvider(name = "resourcesInvalidId")
+    public Object[][] resourcesInvalidIdDataProvider() {
+        return ParametersReaderForResourcesRequests.getInvalidResourcesId();
+    }
+
+    @DataProvider(name = "usersInvalidId")
+    public Object[][] usersInvalidIdDataProvider() {
+        return ParametersReaderForUsersRequests.getInvalidUsersId();
+    }
+
+    @DataProvider(name = "usersValidId")
+    public Object[][] usersValidIdDataProvider() {
+        return ParametersReaderForUsersRequests.getValidUsersId();
+    }
 
 
     protected enum Messages {
