@@ -12,20 +12,21 @@ import static com.shilov.training.tests.BaseReqresTest.Messages.*;
 
 public class GetUserTests extends BaseReqresTest {
 
-    @Test
+    @Test(groups = {"user_operations", "smoke"})
     public void testGetUsersWithoutParameters() {
         ValidatableResponse response = userManagementRequests.getUsers();
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.extract().statusCode(), 200, CODE.toString());
         softAssert.assertEquals(response.extract().body().jsonPath().getString("page"), "1", PAGE_NUMBER.toString());
-        softAssert.assertEquals(response.extract().body().jsonPath().getString("per_page"), "6", USERS_PER_PAGE.name());
+        softAssert.assertEquals(response.extract().body().jsonPath().getString("per_page"), "6",
+                USERS_PER_PAGE.toString());
         softAssert.assertEquals(
                 response.extract().body().jsonPath().getList("data", User.class),
                 UsersReader.getUsersInRange(1, 6), USERS_OBJECTS.toString());
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "validPageNumbersAndUsersNumbers")
+    @Test(dataProvider = "validPageNumbersAndUsersNumbers", groups = {"user_operations", "smoke"})
     public void testGetUsersValidPageNumberAndUsersNumberPerPage(String pageNumber, String usersNumberPerPage) {
         ValidatableResponse response = userManagementRequests.getUsers(pageNumber, usersNumberPerPage);
         SoftAssert softAssert = new SoftAssert();
@@ -44,7 +45,7 @@ public class GetUserTests extends BaseReqresTest {
         return ParametersReaderForUsersRequests.getValidPageNumbersAndUsersNumber();
     }
 
-    @Test(dataProvider = "invalidUsersNumber")
+    @Test(dataProvider = "invalidUsersNumber", groups = {"user_operations", "negative"})
     public void testGetUsersInvalidUsersNumber(String usersNumber) {
         String defaultValidPageNumber = "2";
         ValidatableResponse response = userManagementRequests.getUsers(defaultValidPageNumber, usersNumber);
@@ -60,7 +61,7 @@ public class GetUserTests extends BaseReqresTest {
         return ParametersReaderForUsersRequests.getInvalidUsersNumbersPerPage();
     }
 
-    @Test (dataProvider = "invalidPageNumberForUsers")
+    @Test (dataProvider = "invalidPageNumberForUsers", groups = {"user_operations", "negative"})
     public void testGetUsersInvalidPageNumber(String pageNumber) {
         String defaultValidUsersNumberPerPage = "2";
         ValidatableResponse response = userManagementRequests.getUsers(pageNumber, defaultValidUsersNumberPerPage);
@@ -76,7 +77,7 @@ public class GetUserTests extends BaseReqresTest {
         return ParametersReaderForUsersRequests.getInvalidPageNumbersPerPage();
     }
 
-    @Test(dataProvider = "usersValidId")
+    @Test(dataProvider = "usersValidId", groups = {"user_operations", "smoke"})
     public void testGetUserByIdValidIdValue(String userId) {
         ValidatableResponse response = userManagementRequests.getUserById(userId);
         SoftAssert softAssert = new SoftAssert();
@@ -87,7 +88,7 @@ public class GetUserTests extends BaseReqresTest {
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "usersInvalidId")
+    @Test(dataProvider = "usersInvalidId", groups = {"user_operations", "negative"})
     public void testGetUserByIdInvalidIdValue(String userId) {
         ValidatableResponse response = userManagementRequests.getUserById(userId);
         SoftAssert softAssert = new SoftAssert();

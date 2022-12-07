@@ -15,32 +15,34 @@ import org.testng.asserts.SoftAssert;
 
 public class AccountOperationsTests extends BaseReqresTest {
 
-    @Test(dataProvider = "accountRequestsValidBody")
+    @Test(dataProvider = "accountRequestsValidBody", groups = {"smoke", "account_operations"})
     public void testRegisterUserResponseBodyWhenValidBody(AccountOperationRequestBody body) {
         RegisterUserResponseBody response = accountOperationsRequests.registerUser(body)
                 .extract()
                 .as(RegisterUserResponseBody.class);
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(UsersReader.getUserById(Long.parseLong(response.getId())).getEmail(), body.getEmail());
-        softAssert.assertNotNull(response.getToken());
+        softAssert.assertEquals(UsersReader.getUserById(Long.parseLong(response.getId())).getEmail(), body.getEmail()
+                , "check email by received id");
+        softAssert.assertNotNull(response.getToken(), Messages.TOKEN.toString());
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "accountRequestsValidBody")
+    @Test(dataProvider = "accountRequestsValidBody", groups = {"smoke", "account_operations"})
     public void testRegisterUserRequestSchemaValidBody(AccountOperationRequestBody body) {
         accountOperationsRequests.registerUser(body)
                 .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/register_user_response.json"));
     }
 
-    @Test(dataProvider = "accountRequestsValidBody")
+    @Test(dataProvider = "accountRequestsValidBody", groups = {"smoke", "account_operations"})
     public void testLoginUserRequestValidBody(AccountOperationRequestBody body) {
         ValidatableResponse response = accountOperationsRequests.login(body);
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.extract().statusCode(), 200);
-        softAssert.assertNotNull(response.extract().as(LoginUserResponseBody.class).getToken());
+        softAssert.assertEquals(response.extract().statusCode(), 200, Messages.CODE.toString());
+        softAssert.assertNotNull(response.extract().as(LoginUserResponseBody.class).getToken(),
+                Messages.TOKEN.toString());
     }
 
-    @Test(dataProvider = "accountRequestsValidBody")
+    @Test(dataProvider = "accountRequestsValidBody", groups = {"smoke", "account_operations"})
     public void testLogoutRequest(AccountOperationRequestBody body) {
         accountOperationsRequests.login(body);
         accountOperationsRequests.logout().statusCode(200);
@@ -51,21 +53,21 @@ public class AccountOperationsTests extends BaseReqresTest {
         return ParametersReaderForAccountRequests.getRequestBodiesWithValidData();
     }
 
-    @Test(dataProvider = "accountRequestsInvalidEmails")
+    @Test(dataProvider = "accountRequestsInvalidEmails",groups = {"negative", "account_operations"})
     public void testRegisterUserRequestInvalidEmail(AccountOperationRequestBody body) {
         ExtractableResponse<Response> response = accountOperationsRequests.registerUser(body).extract();
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.statusCode(), 400);
-        softAssert.assertNotNull(response.body().jsonPath().getString("error"));
+        softAssert.assertEquals(response.statusCode(), 400, Messages.CODE.toString());
+        softAssert.assertNotNull(response.body().jsonPath().getString("error"), Messages.ERROR_BODY.toString());
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "accountRequestsInvalidEmails")
+    @Test(dataProvider = "accountRequestsInvalidEmails", groups = {"negative", "account_operations"})
     public void testLoginUserRequestInvalidEmail(AccountOperationRequestBody body) {
         ExtractableResponse<Response> response = accountOperationsRequests.login(body).extract();
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.statusCode(), 400);
-        softAssert.assertNotNull(response.body().jsonPath().getString("error"));
+        softAssert.assertEquals(response.statusCode(), 400, Messages.CODE.toString());
+        softAssert.assertNotNull(response.body().jsonPath().getString("error"), Messages.ERROR_BODY.toString());
         softAssert.assertAll();
     }
 
@@ -74,21 +76,21 @@ public class AccountOperationsTests extends BaseReqresTest {
             return ParametersReaderForAccountRequests.getRequestBodiesWithInvalidEmails();
     }
 
-    @Test(dataProvider = "accountRequestsInvalidPassword")
+    @Test(dataProvider = "accountRequestsInvalidPassword", groups = {"negative", "account_operations"})
     public void testRegisterUserInvalidPassword(AccountOperationRequestBody body) {
         ExtractableResponse<Response> response = accountOperationsRequests.registerUser(body).extract();
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.statusCode(), 400);
-        softAssert.assertNotNull(response.body().jsonPath().getString("error"));
+        softAssert.assertEquals(response.statusCode(), 400, Messages.CODE.toString());
+        softAssert.assertNotNull(response.body().jsonPath().getString("error"), Messages.ERROR_BODY.toString());
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "accountRequestsInvalidPassword")
+    @Test(dataProvider = "accountRequestsInvalidPassword", groups = {"negative", "account_operations"})
     public void testLoginUserInvalidPassword(AccountOperationRequestBody body) {
         ExtractableResponse<Response> response = accountOperationsRequests.login(body).extract();
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.statusCode(), 400);
-        softAssert.assertNotNull(response.body().jsonPath().getString("error"));
+        softAssert.assertEquals(response.statusCode(), 400, Messages.CODE.toString());
+        softAssert.assertNotNull(response.body().jsonPath().getString("error"), Messages.ERROR_BODY.toString());
         softAssert.assertAll();
     }
 

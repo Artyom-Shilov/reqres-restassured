@@ -16,7 +16,7 @@ public class GetResourceTests extends BaseReqresTest {
     private String defaultValidPageNumber  = "2";
     private final String defaultValidResourcesPerPage  = "2";
 
-    @Test
+    @Test(groups = {"resource_operations", "smoke"})
     public void testGetResourcesWithoutParameters() {
         ExtractableResponse<Response> response = resourceManagementRequests.getResources().extract();
         SoftAssert softAssert = new SoftAssert();
@@ -31,7 +31,7 @@ public class GetResourceTests extends BaseReqresTest {
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "resourcesValidId")
+    @Test(dataProvider = "resourcesValidId", groups = {"resource_operations", "smoke"})
     public void testGetResourceByIdValidIdValue(String resourceId) {
         ExtractableResponse<Response> response = resourceManagementRequests.getResourceById(resourceId).extract();
         SoftAssert softAssert = new SoftAssert();
@@ -42,7 +42,7 @@ public class GetResourceTests extends BaseReqresTest {
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "resourcesInvalidId")
+    @Test(dataProvider = "resourcesInvalidId", groups = {"resource_operations", "negative"})
     public void testGetResourceByIdInvalidIdValue(String responseId) {
         ExtractableResponse<Response> response = resourceManagementRequests.getResourceById(responseId).extract();
         SoftAssert softAssert = new SoftAssert();
@@ -52,7 +52,7 @@ public class GetResourceTests extends BaseReqresTest {
     }
 
 
-    @Test (dataProvider = "invalidPageNumbersForResources")
+    @Test (dataProvider = "invalidPageNumbersForResources", groups = {"resource_operations", "negative"})
     public void testGetResourcesInvalidPageNumber(String pageNumber) {
         ExtractableResponse<Response> response = resourceManagementRequests.getResources(pageNumber, defaultValidResourcesPerPage).extract();
         SoftAssert softAssert = new SoftAssert();
@@ -67,7 +67,7 @@ public class GetResourceTests extends BaseReqresTest {
         return ParametersReaderForResourcesRequests.getInvalidPageNumbers();
     }
 
-    @Test(dataProvider = "invalidResourcesPerPage")
+    @Test(dataProvider = "invalidResourcesPerPage", groups = {"resource_operations", "negative"})
     public void testGetResourcesInvalidResourcesPerPage(String resourcesPerPage) {
         ExtractableResponse<Response> response = resourceManagementRequests.getResources(defaultValidPageNumber, resourcesPerPage).extract();
         SoftAssert softAssert = new SoftAssert();
@@ -82,7 +82,7 @@ public class GetResourceTests extends BaseReqresTest {
         return ParametersReaderForResourcesRequests.getInvalidResourcesPerPage();
     }
 
-    @Test(dataProvider = "validPageNumbersForResources")
+    @Test(dataProvider = "validPageNumbersForResources", groups = {"resource_operations", "smoke"})
     public void testGetResourcesValidPageNumber(String pageNumber) {
         ExtractableResponse<Response> response = resourceManagementRequests.getResources(pageNumber, defaultValidResourcesPerPage).extract();
         SoftAssert softAssert = new SoftAssert();
@@ -99,7 +99,7 @@ public class GetResourceTests extends BaseReqresTest {
         return ParametersReaderForResourcesRequests.getValidPageNumbers();
     }
 
-    @Test(dataProvider = "validResourcesPerPage")
+    @Test(dataProvider = "validResourcesPerPage", groups = {"resource_operations", "smoke"})
     public void testGetResourcesValidResourcesPerPage(String resourcesPerPage) {
         defaultValidPageNumber = "1";
         ExtractableResponse<Response> response = resourceManagementRequests.getResources(defaultValidPageNumber, resourcesPerPage).extract();

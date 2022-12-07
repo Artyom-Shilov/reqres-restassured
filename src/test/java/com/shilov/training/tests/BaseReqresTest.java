@@ -35,7 +35,6 @@ public abstract class BaseReqresTest {
         return ParametersReaderForUsersRequests.getValidUsersId();
     }
 
-
     protected enum Messages {
         CODE("status code assertion"),
         HEADER_CONTENT_TYPE("content type assertion"),
@@ -46,7 +45,10 @@ public abstract class BaseReqresTest {
         USERS_OBJECTS("users objects assertion"),
         RESOURCES_PER_PAGE("resources amount per page assertion"),
         RESOURCES_NUMBER("number of resources in response assertion"),
-        RESOURCES_OBJECTS("resources objects assertion");
+        RESOURCES_OBJECTS("resources objects assertion"),
+        TOKEN("token assertion"),
+        ERROR_BODY("body error message assertion"),
+        BODY("body information assertion");
 
         private String messageText;
 
